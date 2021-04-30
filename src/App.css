@@ -1,0 +1,209 @@
+@import url("https://use.typekit.net/lwk1pej.css");
+
+/* 
+Sybarite Small
+font-family: sybarite, serif;
+font-weight: 600;
+font-style: normal;
+
+Sybarite Small Italic
+font-family: sybarite, serif;
+font-weight: 600;
+font-style: italic;
+
+Sybarite Huge
+font-family: sybarite, serif;
+font-weight: 900;
+font-style: normal;
+
+
+Minion Pro Bold Cond Subhead
+font-family: minion-pro-condensed-subhead, serif;
+font-weight: 700;
+font-style: normal;
+
+
+Minion Pro Cond Italic Subhead
+font-family: minion-pro-condensed-subhead, serif;
+font-weight: 400;
+font-style: italic;
+
+
+Minion Pro Cond Subhead
+font-family: minion-pro-condensed-subhead, serif;
+font-weight: 400;
+font-style: normal;
+
+
+*/
+
+html{
+  font-family: minion-pro-condensed-subhead, serif;
+}
+
+.App {
+  text-align: center;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: sybarite, serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+header{
+  width: 100%;
+  display: grid;
+  grid-template:"_ l d" auto / 20% 60% 20%;
+}
+
+header a{
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  grid-area: l;
+  justify-self: center;
+}
+
+header .dept-link {
+  grid-area: d;
+  align-self: center;
+  justify-self: center;
+  color: #666;
+  z-index:1000;
+  cursor: pointer;
+}
+
+.hide{
+  display: none;
+}
+
+main{
+  margin: 0;
+}
+
+.search-area {
+  width: 80vw;
+  margin: auto;
+}
+
+.search-area input {
+  --search-font-size: 5vw;
+  width: 80%;
+  font-size: calc(var(--search-font-size) * .9);
+  letter-spacing: calc(var(--search-font-size) * .005);
+  font-family: minion-pro-condensed-subhead, serif;
+  padding:  0.2rem 1.5rem;
+  border-radius: 2.5vw;
+  background: #EEE;
+  outline: none;
+  box-shadow: inset 0px 2px 0 #999;
+  max-width: 700px;
+  max-height: 70px;
+}
+
+/* DEPARTMENT DETAILS */
+
+
+/* 
+SPINNER 
+credit: https://tobiasahlin.com/spinkit/
+*/
+
+.spinner {
+  width: 40px;
+  height: 40px;
+
+  position: relative;
+  margin: 100px auto;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #555;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width:650px){
+  .search-area input {
+
+    font-size: calc(var(--search-font-size) * 1.3);
+    letter-spacing: calc(var(--search-font-size) * .005);
+  }
+}
+
+@media(min-width: 1000px){
+  .search-area input {
+    font-size: 45px;
+    border-radius: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
