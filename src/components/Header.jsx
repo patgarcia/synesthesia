@@ -5,8 +5,10 @@ import Departments from './MET/Departments';
 const Header = () => {
 
   const [ showingMenu, setShowingMenu ] = useState(false)
-  const toggleMenu = () => setShowingMenu(!showingMenu);
-
+  const toggleMenu = () => {
+    document.body.style.overflow = (!showingMenu ? "hidden" : "auto")
+    setShowingMenu(!showingMenu);
+  }
   return (
     <header>
       <Link to="/">
