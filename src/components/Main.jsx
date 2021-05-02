@@ -2,12 +2,16 @@ import Search from './Search';
 import { Route } from 'react-router-dom';
 import DepartmentDetails from './MET/DepartmentDetails';
 import ArtObjSharing from './MET/ArtObjSharing';
+import Synesthesia from './Synesthesia';
 
 const Main = () => {
 
   return (
     <main>
-      <Route exact path="/" component={ Search } />
+      {/* <Route exact path="/" component={ Search } /> */}
+      <Route path="/s/:id" render={ routerprops => (
+        <Synesthesia match={ routerprops.match } />
+      )} />
       <Route exact path="/art-object/:id" render={ routerprops => (
         <ArtObjSharing match={ routerprops.match } />
       )} />

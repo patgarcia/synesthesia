@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import Header from './components/Header';
 import Main from './components/Main';
@@ -14,15 +14,6 @@ function App() {
 
   // API TOOLS
 
-
-  // MET API PARAMS QUERY HERE
-  // let metAPIobj = {
-  //   symbols : ['aapl', 'goog', 'fb'],
-  //   types : ['chart', 'quote'],
-  //   range: '24h',
-  //   filter: ['companyName','symbol','latestPrice','change','high','low','open']
-  // }
-
     // MET API Structure
     const metAPI = {
       url: 'https://collectionapi.metmuseum.org/public/collection/v1/',
@@ -32,7 +23,7 @@ function App() {
         return this.url + endpoint + (queryParamStr ?  '?' + queryParamStr : '')
       },
       callEndpoint: async function(enpoint, queryParams=null){
-        console.log("TRIGGERED FETCHING TO:", enpoint)
+        console.log("FETCHING: %s", this.getURL(enpoint, queryParams))
         return fetch(this.getURL(enpoint, queryParams))
           .then(res => res.json())
           .then(res => res)

@@ -21,9 +21,9 @@ const Departments = React.memo(({ toggleMenu, showingMenu }) => {
   }, [kntxt]);
   
   return (
-    <div className="met-depts" onClick={ toggleMenu } style={ !showingMenu ? {top: -10000} : {}}>
+    <div className="met-depts" onClick={ toggleMenu } style={ !showingMenu ? {top: -2000} : {}}>
       {
-        deptsData.length ? deptsData.map(
+        deptsData.length && showingMenu ? deptsData.map(
           dept => <Link key={dept.departmentId} to={"/d/"+slugify(dept.displayName)}>{dept.displayName}</Link>
           ) : <Spinner />
       }
