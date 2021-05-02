@@ -5,14 +5,18 @@ import ArtObject from './ArtObject';
 const ArtObjSharing = ({ match }) => {
 
   const { kntxt } = useContext(SynesthesiaContext);
-  const [ obj, setObj ] = useState({});
+  const [readyToFetch , setReadyToFetch ] = useState(true);
+  const [ obj, setObj ] = useState(null);
 
+  // replace readyToFetch with proper hook logic
   useEffect(() => {
     const getObj = async id => {
       let objJSON = await kntxt.metAPI.getObj(id);
       setObj(objJSON);
+      setReadyToFetch(false);
+      console.log(objJSON);
     }
-    getObj(match.params.id)
+    if(readyToFetch) getObj(match.params.id)
   })
 
   return (

@@ -29,7 +29,6 @@ function useOnScreen(options){
 
 const ArtObjects = ({ ids }) => {
 
-
   const [ setRef, visible ] = useOnScreen({ rootMargin: "-100px"})
 
   const cuttoff = 10;
@@ -39,6 +38,7 @@ const ArtObjects = ({ ids }) => {
   const [ readyToFetch, setReadyToFetch ] = useState(true);
   const { kntxt } = useContext(SynesthesiaContext);
 
+  // replace readyToFetch with proper hook logic
   useEffect(() => {
     const getObjs = async() => {
       if(idsState.length){
@@ -51,6 +51,7 @@ const ArtObjects = ({ ids }) => {
       }
       else{ console.log("trying to run fetch but no ids avail") }
     };
+    // visible handles lazyloading of images on scroll to bottom
     if(visible && readyToFetch) {
       setReadyToFetch(false);
       getObjs()

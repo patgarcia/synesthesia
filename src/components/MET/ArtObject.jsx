@@ -11,19 +11,20 @@ const ArtObject = React.memo(({ obj, timeOffsetIndex }) => {
       setTimeout(() => setHideCard(false), timeOffsetIndex * 300);
     }, [setHideCard, timeOffsetIndex])
 
+    function flipCard(){
+      setCardOpen(!cardOpen);
+      setTimeout(() => setShowInfo(!showInfo), 125); // 125ms is half of css animation duration
+    }
+
     return (
-        // the 250 in the setTimeout represent half the time of the css animation flip
         <div
             key={ obj.objectID }
             className={'art-obj-card' + (hideCard ? '' : (cardOpen ? ' flip' : ' flop'))}
-            onClick={() => {
-                setCardOpen(!cardOpen);
-                setTimeout(() => setShowInfo(!showInfo), 125);
-            }}
+            onClick={ flipCard }
             style={( hideCard ? {opacity: 0} : {})}
         >
             <img draggable="true" alt={obj.title} src={obj.primaryImageSmall} />
-            {showInfo ? (
+            { showInfo &&
                 <div className="art-obj-info">
                     <Link to={`/art-object/${ obj.objectID }`}><img id="link-icon" alt="Link icon" src={linkSVG} /></Link>
                     <h3>{obj.title}</h3>
@@ -37,22 +38,16 @@ const ArtObject = React.memo(({ obj, timeOffsetIndex }) => {
                             <strong>Classification</strong> {obj.classification}
                         </li>
                     </ul>
-                    {obj.artistDisplayBio ? (
+                    { obj.artistDisplayBio &&
                         <ul>
                           <h4>{ obj.artistDisplayName }</h4>
                             <p className="artist-dates">( { obj.artistBeginDate } - { obj.artistEndDate })</p>
                             <p>{ obj.artistDisplayBio }</p>
                             <p>{ obj.artistNationality }</p>
                         </ul>
-                    ) : (
-                        ''
-                    )}
-
-                    {/* { Object.entries(obj).map(([key, val]) => <p><strong>{key}</strong>{val}</p>)} */}
+                    }
                 </div>
-            ) : (
-                ''
-            )}
+            }
         </div>
     );
 });
