@@ -1,22 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { RGBAToHSLA } from '../Tools';
 import * as Tone from 'tone';
 
 const SynesthesiaCanvas = ( { imgURL } ) => {
 
+  const [color, setColor] = useState(null);
+  const [ mouse, setMouse ] = useState(null)
+  const [synth, setSynth ] = useState(null)
+
+  // https://stackoverflow.com/a/43881141/5727431
+  const proxy = process.env.REACT_APP_PROXY;
+
   const canvasRef = useRef(null);
+  const colorSquareRef = useRef(null);
   const [ ctxState, setCtxState ] = useState({});
 
   const startSound = async () => {
     await Tone.start();
-    const synth = new Tone.Synth().toDestination()
-    synth.triggerAttackRelease("C4", "8n");
+    
+    const synthObj = new Tone.FMSynth().toDestination();
+    setSynth(synthObj)
   };
 
-  const getPixelColor = () => console.log("PIXEL COLOR",ctxState.getImageData(50,50,1,1));
 
-
-
-
+  const getPixelColor = (ev) => {
+    let {pageX:x, pageY:y} = ev;
+    
+    if(canvasRef.current.offsetParent){
+      const { offsetLeft, offsetTop } = canvasRef.current;
+      x -= offsetLeft;
+      y -= offsetTop;
+    }
+    const [r, g, b, a] = ctxState.getImageData(x,y,1,1).data;
+    setColor(`rgba(${r}, ${g}, ${b}, ${a})`);
+    const [h] = RGBAToHSLA(r, g, b, a);
+    const soundFreq = h * 1.23 + 440;
+    synth.triggerAttackRelease(1 + soundFreq, "1n");
+    setMouse({x,y})
+  };
   
 
   useEffect(() => {
@@ -25,23 +46,30 @@ const SynesthesiaCanvas = ( { imgURL } ) => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       const img = new Image();
+      img.crossOrigin = "Anonymous";
       img.onload = function(){
-        canvas.width = this.naturalWidth;
-        canvas.height = this.naturalHeight;
-        ctx.drawImage(img, 0, 0)
+        const proportionedHeight = (this.naturalHeight * window.innerWidth) / this.naturalWidth
+        canvas.width = window.innerWidth;
+        canvas.height = proportionedHeight;
+        ctx.drawImage(img, 0, 0, canvas.width, proportionedHeight)
         setCtxState(ctx);
       }
-      img.src = imgURL;
-      console.log(imgURL, canvasRef.current)
+      img.src = proxy + imgURL;
     }
 
-    prepareSoundCanvas(imgURL)
-  }, [imgURL])
+    if(imgURL) prepareSoundCanvas(imgURL)
+  }, [imgURL, proxy])
 
   return (
     <div>
-      <canvas onClick={ getPixelColor }  ref={canvasRef}></canvas>
-      <button onClick={ startSound }>start sound</button>
+      <div ref={colorSquareRef} className="color-square" style={color ? {background: color, top: mouse.y + 150 - window.scrollY, left: mouse.x + 40 -  window.scrollX  } : {}}></div>
+      <canvas id="synth-canvas" onMouseMove={ getPixelColor }  ref={canvasRef}></canvas>
+
+          <div className="modal" style={ synth ? {display: 'none'} : {}}>
+            <p>Click start and move your mouse over the image to experience the sound of each color.</p>
+            <button onClick={ startSound }>Start Synesthesia</button>
+          </div>
+      
     </div>
       
   );

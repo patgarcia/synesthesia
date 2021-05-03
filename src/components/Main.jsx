@@ -1,4 +1,4 @@
-import Search from './Search';
+import Intro from './Intro';
 import { Route } from 'react-router-dom';
 import DepartmentDetails from './MET/DepartmentDetails';
 import ArtObjSharing from './MET/ArtObjSharing';
@@ -8,7 +8,7 @@ const Main = () => {
 
   return (
     <main>
-      {/* <Route exact path="/" component={ Search } /> */}
+      <Route exact path="/" component={ Intro } />
       <Route path="/s/:id" render={ routerprops => (
         <Synesthesia match={ routerprops.match } />
       )} />

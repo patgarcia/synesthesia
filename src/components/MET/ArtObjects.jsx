@@ -64,7 +64,7 @@ const ArtObjects = ({ ids }) => {
       {
         metObjs.length ? metObjs.map((obj, i) => <ArtObject  key={ i } obj={ obj } timeOffsetIndex={ i % cuttoff } />) : ''
       }
-      <p ref={ setRef } id="sentinel" key="sentinel">⎯⎯⎯⎯⎯⎯ { idsState.length ? idsState.length +  " Art" : "No" } Objects Left To Load ⎯⎯⎯⎯⎯⎯</p>
+      <p ref={ setRef } id="sentinel" key="sentinel">⎯⎯⎯ { idsState.length ? idsState.length +  " Art" : "No" } Objects Left To Load ⎯⎯⎯</p>
       { idsState.length && !readyToFetch ? <Spinner /> : ''}
     </div>
   );

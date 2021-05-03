@@ -23,7 +23,7 @@ function App() {
         return this.url + endpoint + (queryParamStr ?  '?' + queryParamStr : '')
       },
       callEndpoint: async function(enpoint, queryParams=null){
-        console.log("FETCHING: %s", this.getURL(enpoint, queryParams))
+        // console.log("FETCHING: %s", this.getURL(enpoint, queryParams))
         return fetch(this.getURL(enpoint, queryParams))
           .then(res => res.json())
           .then(res => res)
