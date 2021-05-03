@@ -11,6 +11,8 @@ It is also a take on how [Neil Harbisson](https://www.ted.com/talks/neil_harbiss
 ## Repo
 The repository can be found at https://github.com/patgarcia/synesthesia
 
+## API
+The Metropolitan Art Museum API https://metmuseum.github.io/
 ## Techonologies used
 * Node JS
 * React JS
