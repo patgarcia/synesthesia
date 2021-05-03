@@ -3,7 +3,91 @@
 :root{
   --container-padding: 10px;
   --anchor-font-size: min(2vw, max(2vh, 30px));
+
+  /* Mode switch vars */
+  --switch-width: 40px;
+  --switch-height: calc(var(--switch-width) / 2);
+  --switch-distance: calc(var(--switch-width) - var(--switch-height));
+
+  /* Light mode colors */
+  --light-1: rgba(240,240,240,1);
+  --light-2: rgba(200,200,200,1);
+  --light-3: rgba(160,160,160,1);
+  --light-4: rgba(120,120,120,1);
+  --light-5: rgba(60,60,60,1);
+  --light-6: rgba(0,0,0,1);
+
+  /* Dark mode colors */
+  --dark-1: rgba(0,0,0,1);
+  --dark-2: rgba(60,60,60,1);
+  --dark-3: rgba(120,120,120,1);
+  --dark-4: rgba(160,160,160,1);
+  --dark-5: rgba(200,200,200,1);
+  --dark-6: rgba(240,240,240,1);
+
+  /* Style variables */
+  --color-1: var(--light-1);
+  --color-2: var(--light-2);
+  --color-3: var(--light-3);
+  --color-4: var(--light-4);
+  --color-5: var(--light-5);
+  --color-6: var(--light-6);
+
 }
+
+
+/*=============
+MODE SWITCH
+=============*/
+
+#mode-switch{
+  width: var(--switch-width);
+  height:var(--switch-height);
+  background: var(--color-6);
+  text-align: left;
+  margin: 20px auto 20px;
+  border-radius: var(--switch-height);
+  border: solid var(--color-6);
+  transition: all .2s;
+}
+#mode-switch span{
+  display: inline-block;
+  height: 100%;
+  width: var(--switch-height);
+  background: var(--color-4);
+  animation: .5s lightmode forwards;
+  border-radius: 100%;
+}
+
+.darkmode{
+animation: .5s darkmode !important;
+}
+
+#mode-checkbox{
+  display: none;
+}
+
+@keyframes lightmode  {
+  0% {
+      transform: translate( 0,0);
+  }
+  100% {
+      transform: translate( var(--switch-distance),0);
+  }
+}
+
+@keyframes darkmode  {
+  0% {
+      transform: translate( var(--switch-distance),0);
+  }
+  100% {
+      transform: translate( 0,0);
+  }
+}
+
+
+/* mode switch end */
+
 
 .met-depts{
   margin: auto;
