@@ -1,35 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RGBAToHSLA } from '../Tools';
+import Spinner from './Spinner'
 import * as Tone from 'tone';
 
 const SynesthesiaCanvas = ({ imgURL }) => {
     const [color, setColor] = useState(null);
     const [mouse, setMouse] = useState(null);
     const [synth, setSynth] = useState(null);
+    const [canvaReady, setCanvasReady] = useState(false);
 
     const [timeoutObj, setTimeoutObjs] = useState(null);
 
     const modeCheckBoxRef = useRef(null);
     const modeSwitchRef = useRef(null);
     const switcherRef = useRef(null);
-    
+
     // mode switcher
-    const switchMode = (className) => {
+    const switchMode = className => {
         let dm = className;
         if (switcherRef.current.classList.contains(dm)) {
-          switcherRef.current.classList.remove(dm);
+            switcherRef.current.classList.remove(dm);
         } else {
-          switcherRef.current.classList.add(dm);
+            switcherRef.current.classList.add(dm);
         }
     };
 
     const switchCheckbox = e => {
-      switchMode('darkmode');
-      modeCheckBoxRef.current.checked = !modeCheckBoxRef.current.checked;
-    }
+        switchMode('darkmode');
+        modeCheckBoxRef.current.checked = !modeCheckBoxRef.current.checked;
+    };
 
-
-    // MODE SWITCH END
 
     // https://stackoverflow.com/a/43881141/5727431
     const proxy = process.env.REACT_APP_PROXY;
@@ -44,7 +44,6 @@ const SynesthesiaCanvas = ({ imgURL }) => {
         setSynth(synthObj);
     };
 
-    
     const getPixelColor = ev => {
         clearTimeout(timeoutObj);
         let { pageX: x, pageY: y } = ev;
@@ -57,12 +56,15 @@ const SynesthesiaCanvas = ({ imgURL }) => {
         const [r, g, b, a] = ctxState.getImageData(x, y, 1, 1).data;
         setColor(`rgba(${r}, ${g}, ${b}, ${a})`);
         const [h, l] = RGBAToHSLA(r, g, b, a);
-        const levels = 2 * l - 1
-        let soundFreq = h * 1.23 + 440 ;
-        setTimeoutObjs(setTimeout(() => {
-            if (!modeCheckBoxRef.current.checked) soundFreq += (soundFreq * levels )
-            synth.triggerAttackRelease(soundFreq, '2n')
-        }, 6));
+        const levels = 2 * l - 1;
+        let soundFreq = h * 1.23 + 440;
+        setTimeoutObjs(
+            setTimeout(() => {
+                if (!modeCheckBoxRef.current.checked)
+                    soundFreq += soundFreq * levels;
+                synth.triggerAttackRelease(soundFreq, '2n');
+            }, 6)
+        );
         setMouse({ x, y });
     };
 
@@ -80,12 +82,12 @@ const SynesthesiaCanvas = ({ imgURL }) => {
                 canvas.height = proportionedHeight;
                 ctx.drawImage(img, 0, 0, canvas.width, proportionedHeight);
                 setCtxState(ctx);
+                setCanvasReady(true);
             };
             img.src = proxy + imgURL;
         };
 
         if (imgURL) prepareSoundCanvas(imgURL);
-
     }, [imgURL, proxy, modeSwitchRef, modeCheckBoxRef]);
 
     return (
@@ -106,7 +108,13 @@ const SynesthesiaCanvas = ({ imgURL }) => {
             <div id="mode-switch" ref={modeSwitchRef} onClick={switchCheckbox}>
                 <span id="switcher" ref={switcherRef}></span>
             </div>
-            <input type="checkbox" name="mode" ref={modeCheckBoxRef} id="mode-checkbox" defaultChecked />
+            <input
+                type="checkbox"
+                name="mode"
+                ref={modeCheckBoxRef}
+                id="mode-checkbox"
+                defaultChecked
+            />
 
             <canvas
                 id="synth-canvas"
@@ -119,7 +127,8 @@ const SynesthesiaCanvas = ({ imgURL }) => {
                     Click start and move your mouse over the image to experience
                     the sound of each color.
                 </p>
-                <button onClick={startSound}>Start Synesthesia</button>
+                { canvaReady ? <button onClick={startSound}>Start Synesthesia</button> : <div><h4>Loading Image</h4><Spinner /></div>}
+                
             </div>
         </div>
     );
