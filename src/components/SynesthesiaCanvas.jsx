@@ -22,8 +22,9 @@ const SynesthesiaCanvas = ( { imgURL } ) => {
     setSynth(synthObj)
   };
 
-
+  let timeout;
   const getPixelColor = (ev) => {
+    clearTimeout(timeout);
     let {pageX:x, pageY:y} = ev;
     
     if(canvasRef.current.offsetParent){
@@ -35,7 +36,7 @@ const SynesthesiaCanvas = ( { imgURL } ) => {
     setColor(`rgba(${r}, ${g}, ${b}, ${a})`);
     const [h] = RGBAToHSLA(r, g, b, a);
     const soundFreq = h * 1.23 + 440;
-    synth.triggerAttackRelease(1 + soundFreq, "1n");
+    timeout = setTimeout(() => { synth.triggerAttackRelease(1 + soundFreq, "1n") }, 100)
     setMouse({x,y})
   };
   
