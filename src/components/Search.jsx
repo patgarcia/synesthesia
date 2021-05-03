@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 //https://collectionapi.metmuseum.org/public/collection/v1/search?q=m&artistOrCulture=true&hasImages=true
@@ -15,6 +15,10 @@ const Search = () => {
   ]
 
   const [searchMsg, setSearchMsg ] = useState(randMsg(blurMessages))
+
+  
+
+  useEffect(()=>{ setSearchMsg('a') },[setSearchMsg])
 
   const handleBlur = ev => {
     if(!ev.target.value) {

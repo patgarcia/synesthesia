@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import linkSVG from  '../../static/link.svg'
+import gclefSVG from  '../../static/g-clef.svg'
 
 const ArtObject = React.memo(({ obj, timeOffsetIndex }) => {
     const [cardOpen, setCardOpen] = useState(false);
@@ -27,6 +28,7 @@ const ArtObject = React.memo(({ obj, timeOffsetIndex }) => {
             { showInfo &&
                 <div className="art-obj-info">
                     <Link to={`/art-object/${ obj.objectID }`}><img id="link-icon" alt="Link icon" src={linkSVG} /></Link>
+                    <Link to={`/s/${ obj.objectID }`}><img id="link-icon" alt="Link icon" src={gclefSVG} /></Link>
                     <h3>{obj.title}</h3>
                     <h4>{obj.objectDate}</h4>
                     <h5>{obj.culture}</h5>

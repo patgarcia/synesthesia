@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {SynesthesiaContext} from "./SynesthesiaContext";
 import SynesthesiaCanvas from "./SynesthesiaCanvas";
 import Spinner from "./Spinner";
@@ -17,7 +17,6 @@ const Synesthesia = ({ match }) => {
   useEffect(() => {
     const getObj = async id => {
       let objDataJSON = await kntxt.metAPI.getObj(id);
-      console.log(objDataJSON);
       setArtObj(objDataJSON);
     }
 
@@ -26,10 +25,10 @@ const Synesthesia = ({ match }) => {
 
   return (
     <div className="synesthesia">
-      <h1>X: { match.params.id }</h1>
       { artObj !== {} ? (
         <div>
-          <SynesthesiaCanvas imgURL={ artObj.primaryImageSmall } />
+          <h1>{ artObj.title }</h1>
+          <SynesthesiaCanvas imgURL={ artObj.primaryImage } />
         </div>
       )  : <Spinner /> }
 

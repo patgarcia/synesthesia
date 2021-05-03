@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import { SynesthesiaContext } from '../SynesthesiaContext';
 import ArtObjects from './ArtObjects';
 import Spinner from '../Spinner';
