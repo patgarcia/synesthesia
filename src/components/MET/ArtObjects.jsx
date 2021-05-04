@@ -44,12 +44,11 @@ const ArtObjects = ({ ids }) => {
       if(idsState.length){
         let [ tempIds, restIds ] = [idsState.slice(0, cuttoff), idsState.slice(cuttoff)];
         let objs = await kntxt.metAPI.getObjs(tempIds);
-        console.log(objs[0]);
         setMetObjs([...metObjs, ...objs]);
         setIdsState(restIds)
         setReadyToFetch(true);
       }
-      else{ console.log("trying to run fetch but no ids avail") }
+      // else{ console.log("trying to run fetch but no ids avail") }
     };
     // visible handles lazyloading of images on scroll to bottom
     if(visible && readyToFetch) {
