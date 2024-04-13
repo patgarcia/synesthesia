@@ -55,13 +55,24 @@ const SynesthesiaCanvas = ({ imgURL }) => {
         }
         const [r, g, b, a] = ctxState.getImageData(x, y, 1, 1).data;
         setColor(`rgba(${r}, ${g}, ${b}, ${a})`);
-        const [h, l] = RGBAToHSLA(r, g, b, a);
+        const [h, s, l] = RGBAToHSLA(r, g, b, a);
         const levels = 2 * l - 1;
         let soundFreq = h * 1.23 + 440;
         setTimeoutObjs(
             setTimeout(() => {
-                if (!modeCheckBoxRef.current.checked)
+                synth.volume.value = Tone.gainToDb(s + .5);
+
+                if (l < .5) {
+                    synth.oscillator.type = 'sine';
+                    synth.envelope.attack = 0.1;  // faster attack for brighter sounds
+                } else {
+                    synth.oscillator.type = 'triangle';
+                    synth.envelope.attack = 0.5;  // slower attack for darker sounds
+                }
+
+                if (modeCheckBoxRef.current.checked){
                     soundFreq += soundFreq * levels;
+                }
                 synth.triggerAttackRelease(soundFreq, '2n');
             }, 6)
         );
@@ -84,7 +95,11 @@ const SynesthesiaCanvas = ({ imgURL }) => {
                 setCtxState(ctx);
                 setCanvasReady(true);
             };
-            img.src = proxy + imgURL;
+            if(imgURL === 'color.png'){
+                img.src = `/${imgURL}`;
+            }else{
+                img.src = proxy + imgURL;
+            }
         };
 
         if (imgURL) prepareSoundCanvas(imgURL);

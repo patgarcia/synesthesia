@@ -9,6 +9,7 @@ const Synesthesia = ({ match }) => {
   const [ artObj, setArtObj ] = useState({});
 
   const artObjID = match.params.id;
+  console.log({artObjID})
 
 
   
@@ -19,8 +20,16 @@ const Synesthesia = ({ match }) => {
       let objDataJSON = await kntxt.metAPI.getObj(id);
       setArtObj(objDataJSON);
     }
-
-    getObj(artObjID);
+    if(artObjID !== 'color'){
+      getObj(artObjID);
+    }else{
+      setArtObj(
+        {
+          type: "color",
+          primaryImage: "color.png"
+        }
+      )
+    }
   }, [setArtObj, kntxt, artObjID]);
 
   return (
