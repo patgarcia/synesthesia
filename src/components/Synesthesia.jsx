@@ -6,13 +6,9 @@ import Spinner from "./Spinner";
 const Synesthesia = ({ match }) => {
 
   const { kntxt } = useContext(SynesthesiaContext);
-  const [ artObj, setArtObj ] = useState({});
+  const [ artObj, setArtObj ] = useState();
 
   const artObjID = match.params.id;
-  console.log({artObjID})
-
-
-  
 
 
   useEffect(() => {
@@ -34,7 +30,7 @@ const Synesthesia = ({ match }) => {
 
   return (
     <div className="synesthesia">
-      { artObj !== {} ? (
+      { artObj ? (
         <div>
           <h1>{ artObj.title }</h1>
           <SynesthesiaCanvas imgURL={ artObj.primaryImage } />

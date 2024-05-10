@@ -359,7 +359,8 @@ main{
 
 .intro{
   max-width: 80%;
-  padding: 10%;
+  padding: 3% 0;
+  margin: auto;
 }
 .intro h2{
   font-size: 3rem;
